@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            background: linear-gradient(135deg, #6a3c9a, #000001);
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 20px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            font-size: 1.2rem;
+            padding: 12px 24px;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #ff9900;
+            transform: scale(1.1);
+        }
+        .btn-link {
+            color: #ffcc00;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+        .btn-link:hover {
+            color: #ff9900;
+        }
+
+        /* Features Section */
+        .features {
+            margin-top: 50px;
+        }
+        .features h3 {
+            color: #ffcc00;
+            font-size: 1.5rem;
+        }
+        .features p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Welcome to QuizMaster</h1>
+        <p>Your ultimate platform for creating, managing, and taking quizzes.</p>
+        <a href="{{ url_for('student_login') }}" class="btn btn-primary mt-3">Get Started</a>
+        
+        <!-- Admin Redirect -->
+        <div class="cta mt-3">
+            <p>If you're the admin, <a href="{{ url_for('admin_login') }}" class="btn btn-link">click here</a> to login.</p>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container features">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>🎯 Attempt Quizzes</h3>
+                <p>Challenge yourself with engaging quizzes.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>📊 Track Progress</h3>
+                <p>Monitor your scores and improve over time.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>📚 Learn & Grow</h3>
+                <p>Enjoy interactive learning experiences.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 QuizMaster. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
