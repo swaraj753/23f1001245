@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #4e73df;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: white;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4e73df;
+            font-weight: 600;
+        }
+
+        .btn-outline-light {
+            background-color: #4e73df;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background-color: white;
+            color: #4e73df;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        table {
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table th {
+            background-color: #4e73df;
+            color: white;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('student_dashboard', student_id=student.id) }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('student_search', student_id=student.id) }}">Search</a>
+                    </li>
+                    <!-- Add more links as necessary -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Search Quizzes</h2>
+        <form method="GET" action="{{ url_for('student_search', student_id=student.id) }}">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="start_date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date">
+                </div>
+                <div class="col">
+                    <label for="end_date" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date">
+                </div>
+            </div>
+
+            <!-- Marks Range -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="min_marks" class="form-label">Min Marks</label>
+                    <input type="number" class="form-control" id="min_marks" name="min_marks" placeholder="Minimum Marks">
+                </div>
+                <div class="col">
+                    <label for="max_marks" class="form-label">Max Marks</label>
+                    <input type="number" class="form-control" id="max_marks" name="max_marks" placeholder="Maximum Marks">
+                </div>
+            </div>
+
+            <!-- Quiz Name or Chapter Name -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="search_term" class="form-label">Quiz Name or Chapter</label>
+                    <input type="text" class="form-control" id="search_term" name="search_term" placeholder="Enter quiz name or chapter">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-light">Search</button>
+        </form>
+
+        <h2 class="mt-5">Search Results</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Quiz ID</th>
+                    <th>Quiz Name</th>
+                    <th>Chapter</th>
+                    <th>Date</th>
+                    <th>Marks Obtained</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz_result in search_results %}
+                    <tr>
+                        <td>{{ quiz_result.quiz.id }}</td>
+                        <td>{{ quiz_result.quiz.name }}</td>
+                        <td>{{ quiz_result.quiz.chapter.name }}</td>
+                        <td>{{ quiz_result.quiz.date_of_quiz.strftime('%Y-%m-%d') if quiz_result.quiz.date_of_quiz else 'N/A' }}</td>
+                        <td>{{ quiz_result.score }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Navbar Styling */
+        .navbar {
+            background-color: #1e3a8a; /* Dark Blue */
+        }
+        .navbar-nav .nav-link {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ffdd57 !important; /* Vibrant Yellow */
+        }
+        .btn-outline-light {
+            border-color: #ffdd57;
+            color: #ffdd57;
+        }
+        .btn-outline-light:hover {
+            background-color: #ffdd57;
+            color: #1e3a8a;
+        }
+
+        /* Container Styling */
+        .container {
+            background: linear-gradient(to bottom, #e0f7fa, #ffffff); /* Soft Gradient */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Headers */
+        h1, h2 {
+            color: #0d47a1; /* Deep Blue */
+            font-weight: bold;
+        }
+
+        /* Table Styling */
+        .table {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background-color: #0d47a1; /* Deep Blue */
+            color: #fff;
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: #e3f2fd; /* Light Blue */
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(to right, #1e88e5, #0d47a1); /* Gradient Blue */
+            border: none;
+        }
+        .btn-success {
+            background: linear-gradient(to right, #00c853, #00695c); /* Green */
+            border: none;
+        }
+        .btn-primary:hover, .btn-success:hover {
+            opacity: 0.85;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">📚 Student Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('student_dashboard', student_id=student.id) }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('student_scores', student_id=student.id) }}">Scores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('student_summary', student_id=student.id) }}">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light" href="{{ url_for('student_search', student_id=student.id) }}">Search</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container mt-5">
+        <h1>Welcome, {{ student.full_name }}! 👋</h1>
+        <p><strong>Email:</strong> {{ student.username }}</p>
+        <p><strong>Qualification:</strong> {{ student.qualification }}</p>
+        <p><strong>Date of Birth:</strong> {{ student.dob }}</p>
+
+        <h2>Your Quizzes</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Quiz ID</th>
+                    <th>Quiz Name</th>
+                    <th>Chapter</th>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes_created_by_admin %}
+                    <tr>
+                        <td>{{ quiz.id }}</td>
+                        <td>{{ quiz.name }}</td>
+                        <td>{{ quiz.chapter.name }}</td> 
+                        <td>{{ quiz.date_of_quiz.strftime('%Y-%m-%d') if quiz.date_of_quiz else 'N/A' }}</td>
+                        <td>{{ quiz.time_duration if quiz.time_duration else 'N/A' }}</td>
+                        <td>
+                            <a href="{{ url_for('quiz_details', quiz_id=quiz.id) }}" class="btn btn-primary btn-sm">📄 View</a>
+                            <a href="{{ url_for('start_quiz', quiz_id=quiz.id) }}" class="btn btn-success btn-sm">🚀 Start</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
